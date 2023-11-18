@@ -1,24 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React,{useEffect} from "react";
 import { useParams } from "react-router-dom";
 import { makeEmojiList } from "../utils";
+import useQuery from "../hooks/useQuery";
 
 function ArticlePage() {
   // fetch data for a post
   const { id } = useParams();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [post, setPost] = useState(null);
+  const { data: post, isLoaded } = useQuery(
+    `http://localhost:4000/posts/${id}`
+  );
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [post, setPost] = useState(null);
 
-  const url = `http://localhost:4000/posts/${id}`;
-  useEffect(() => {
-    setIsLoaded(false);
-    fetch(url)
-      .then((r) => r.json())
-      .then((post) => {
-        setPost(post);
-        setIsLoaded(true);
-      });
-  }, [url]);
+  // const url = `http://localhost:4000/posts/${id}`;
+  // useEffect(() => {
+  //   setIsLoaded(false);
+  //   fetch(url)
+  //     .then((r) => r.json())
+  //     .then((post) => {
+  //       setPost(post);
+  //       setIsLoaded(true);
+  //     });
+  // }, [url]);
 
+  // useEffect(() => {
+  //   // depends on the page title
+  //   document.title = pageTitle;
+  // }, [pageTitle]);
   // set the document title
   const pageTitle = post ? `Underreacted | ${post.title}` : "Underreacted";
   useEffect(() => {
